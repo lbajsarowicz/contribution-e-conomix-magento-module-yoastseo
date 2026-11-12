@@ -120,6 +120,11 @@
                         <!-- /ko -->
                     <!-- /ko -->
                     <!-- ko foreach: {data: elems, as: 'element'} -->
+                        <!-- ko if: $parent.isElementName(element.name, 'yoast_canonical_url') -->
+                            <!-- ko template: getTemplate() --><!-- /ko -->
+                        <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko foreach: {data: elems, as: 'element'} -->
                         <!-- ko if: $parent.isElementName(element.name, 'yoast_robots_instructions') -->
                             <!-- ko template: getTemplate() --><!-- /ko -->
                         <!-- /ko -->

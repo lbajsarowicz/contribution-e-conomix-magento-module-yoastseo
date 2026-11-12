@@ -33,6 +33,20 @@
                 <dataScope>yoast_content_score</dataScope>
             </settings>
         </field>
+        <field name="yoast_canonical_url" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">category</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Canonical URL</label>
+                <notice translate="true">Leave empty for the default canonical. Absolute URL or path, e.g. /some-page</notice>
+                <scopeLabel>[STORE VIEW]</scopeLabel>
+                <dataScope>yoast_canonical_url</dataScope>
+            </settings>
+        </field>
         <field name="yoast_focus_keyword" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

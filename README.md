@@ -22,6 +22,13 @@ This version of the module has not (yet) been tested on Magento 2 Commerce or Ma
     - Product pages: [Product](https://schema.org/Product)
     - SiteLink Search Box [read more](https://developers.google.com/search/docs/guides/enhance-site#add-a-sitelinks-searchbox-for-your-site)
 - canonical url tag
+    - no canonical on the 404 page, the home page always points to the base URL
+    - per page override: field "Canonical URL" in the "Other" tab of CMS pages, categories and products (absolute URL or path)
+    - optional "Canonical from entity URL" (Stores > Configuration > YoastSEO > SEO Settings > General): the canonical is the
+      product URL (without category path), the category URL (plus `?p=` for page 2+) or the CMS page URL. It follows the
+      configured URL suffix and drops every other parameter. Off by default, which keeps the canonical of the requested
+      URL with a trailing slash. Enable it when the shop has no URL suffix, and disable Magento's own canonical tags
+      (Catalog > Search Engine Optimization) so the page has only one canonical.
 - OpenGraph data
 - Facebook configuration data (app id, admin ids)
 - Twitter card data

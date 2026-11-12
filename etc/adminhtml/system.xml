@@ -18,6 +18,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Strip URL parameters, if e.g. a filter URL is called</comment>
                 </field>
+                <field id="canonical_from_entity_url" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Canonical from entity URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Use the URL of the product (without category path), category (plus page number) or CMS page as canonical. It follows the configured URL suffix and drops every other URL parameter. "No" keeps the canonical of the requested URL with a trailing slash.</comment>
+                </field>
                 <field id="company_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Company Name</label>
                 </field>

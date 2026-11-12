@@ -2,9 +2,11 @@
 
 namespace MaxServ\YoastSeo\Block;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Store\Model\ScopeInterface;
+use MaxServ\YoastSeo\Model\Canonical\CanonicalUrlResolver;
 use MaxServ\YoastSeo\Model\Entity\MetaProviderInterface;
 use MaxServ\YoastSeo\Model\EntityConfigurationPool;
 
@@ -16,18 +18,27 @@ class YoastSeo extends Template
     protected $entityConfigurationPool;
 
     /**
+     * @var CanonicalUrlResolver
+     */
+    private $canonicalUrlResolver;
+
+    /**
      * @param Context $context
      * @param EntityConfigurationPool $entityConfigurationPool
      * @param array $data
+     * @param CanonicalUrlResolver|null $canonicalUrlResolver
      */
     public function __construct(
         protected \Magento\Cms\Model\Page $page,
         Context $context,
         EntityConfigurationPool $entityConfigurationPool,
-        array $data = []
+        array $data = [],
+        ?CanonicalUrlResolver $canonicalUrlResolver = null
     ) {
         parent::__construct($context, $data);
         $this->entityConfigurationPool = $entityConfigurationPool;
+        $this->canonicalUrlResolver = $canonicalUrlResolver
+            ?? ObjectManager::getInstance()->get(CanonicalUrlResolver::class);
     }
 
     /**
@@ -46,9 +57,27 @@ class YoastSeo extends Template
     }
 
     /**
-     * @return string
+     * @return string|null null on pages without canonical (404)
      */
     public function getCanonicalUrl()
+    {
+        if (!$this->hasData('canonical_url')) {
+            $legacyUrl = $this->getLegacyCanonicalUrl();
+            $this->setData(
+                'canonical_url',
+                $this->canonicalUrlResolver->resolve($legacyUrl ? (string) $legacyUrl : null)
+            );
+        }
+
+        return $this->getData('canonical_url');
+    }
+
+    /**
+     * Canonical of the current request, see CanonicalUrlResolver for the cases it gets replaced.
+     *
+     * @return string
+     */
+    private function getLegacyCanonicalUrl()
     {
         $canonical = $this->getUrl('', [
             '_current' => true,

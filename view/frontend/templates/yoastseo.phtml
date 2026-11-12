@@ -22,13 +22,16 @@ if ($meta) {
 ?>
 
 <!-- This site is optimized with the Yoast SEO for Magento plugin 2.0.0 - https://yoast.com/magento/plugins/seo/ -->
-<?php if ($block->getCanonicalUrl()): ?>
-    <link rel="canonical" href="<?php echo $block->getCanonicalUrl(); ?>" />
+<?php $canonicalUrl = $block->getCanonicalUrl(); ?>
+<?php if ($canonicalUrl): ?>
+    <link rel="canonical" href="<?php echo $block->escapeUrl($canonicalUrl); ?>" />
 <?php endif; ?>
 
 <?php if ($meta): ?>
     <!-- YoastSEO OpenGraph -->
-    <meta property="og:url" content="<?php echo $block->getCanonicalUrl(); ?>"/>
+    <?php if ($canonicalUrl): ?>
+        <meta property="og:url" content="<?php echo $block->escapeUrl($canonicalUrl); ?>"/>
+    <?php endif; ?>
     <meta property="og:locale" content="<?php echo $block->getLocale(); ?>" />
     <meta property="og:type" content="<?php echo $meta->getType(); ?>"/>
     <meta property="og:site_name" content="<?php echo $block->getStoreName(); ?>" />
